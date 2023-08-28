@@ -37,13 +37,10 @@ export default () => {
         try {
             if (loginType === 'account') {
                 const res = await Public.login(values.username, values.password, values.code, session_id);
-                console.log(res)
-
-                localStorage.setItem('token', res.token);
-                messageApi.success('登录成功');
-                state.initialState?.updateToken(res.token);
-                history.push('/home');
-
+                    localStorage.setItem('token', res.token);
+                    messageApi.success('登录成功');
+                    state.initialState?.updateToken(res.token);
+                    history.push('/home');
             } else {
 
             }

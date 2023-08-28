@@ -1,9 +1,9 @@
-import {RuntimeAntdConfig} from '@@/plugin-antd/types';
-import {RunTimeLayoutConfig} from '@@/plugin-layout/types';
-import {RequestConfig, RequestOptions} from '@@/plugin-request/request';
-import {message, notification, theme} from 'antd';
-import {history, useModel} from '@umijs/max'
-import {fetchInitialData} from '@/models/init'
+import { RuntimeAntdConfig } from '@@/plugin-antd/types';
+import { RunTimeLayoutConfig } from '@@/plugin-layout/types';
+import { RequestConfig, RequestOptions } from '@@/plugin-request/request';
+import { message, notification, theme } from 'antd';
+import { history, useModel } from '@umijs/max'
+import { fetchInitialData } from '@/models/init'
 import Right from '@/components/right';
 
 export function getInitialState() {
@@ -68,11 +68,11 @@ export const request: RequestConfig = {
     errorConfig: {
         // 错误抛出
         errorThrower: (res: ResponseStructure) => {
-            const {success, data, errorCode, errorMessage} = res;
+            const { success, data, errorCode, errorMessage } = res;
             if (!success || undefined) {
                 const error: any = new Error(errorMessage);
                 error.name = 'BizError';
-                error.info = {success, data, errorCode, errorMessage};
+                error.info = { success, data, errorCode, errorMessage };
                 throw error; // 抛出自制的错误
             }
         },
@@ -85,7 +85,7 @@ export const request: RequestConfig = {
             if (error.response) {
                 // Axios 的错误
                 // 请求成功发出且服务器也响应了状态码，但状态代码超出了 2xx 的范围
-                const {errorCode, errorMessage} = error.response.data;
+                const { errorCode, errorMessage } = error.response.data;
                 switch (errorCode) {
                     case ErrorShowType.SILENT:
                         // do nothing
@@ -128,6 +128,7 @@ export const request: RequestConfig = {
             const data: ResponseStructure = response.data;
             if (!data.success) {
                 message.error('请求失败！');
+                throw new Error(data.errorMessage);
             }
             return response.data;
         },
