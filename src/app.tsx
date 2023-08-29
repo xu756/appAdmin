@@ -1,9 +1,8 @@
 import Right from '@/components/right';
 import { fetchInitialData } from '@/models/init';
-import { history } from '@@/core/history';
 import { RuntimeAntdConfig } from '@@/plugin-antd/types';
 import { RequestConfig } from '@@/plugin-request/request';
-import { message, notification, theme } from 'antd';
+import { theme } from 'antd';
 
 export function getInitialState() {
   return fetchInitialData();
@@ -70,13 +69,15 @@ export const request: RequestConfig = {
       if (!success || undefined) {
         const error: any = new Error(errorMessage);
         error.name = 'BizError';
-        error.info = { success, data, errorCode, errorMessage };
+        error.data = { success, data, errorCode, errorMessage };
         throw error; // 抛出自制的错误
       }
     },
     // 错误接收及处理
 
-    errorHandler: (error: any, opts: any) => {},
+    errorHandler: (error: any, opts: any) => {
+      console.log(error.data);
+    },
   },
 
   // 响应拦截器
@@ -86,30 +87,8 @@ export const request: RequestConfig = {
       const data: ResponseStructure = response.data;
       if (data.success) {
         return response.data;
-      }
-      const { errorCode, errorMessage } = response.data;
-      switch (errorCode) {
-        case ErrorShowType.SILENT:
-          // do nothing
-          break;
-        case ErrorShowType.WARNMESSAGE:
-          message.error(errorMessage);
-          break;
-        case ErrorShowType.ERRORMESSAGE:
-          message.error(errorMessage);
-          break;
-        case ErrorShowType.NOTIFICATION:
-          notification.open({
-            description: errorMessage,
-            message: errorCode,
-          });
-          break;
-        case ErrorShowType.REDIRECT:
-          // TODO: redirect
-          history.push('/login');
-          break;
-        default:
-          message.error(errorMessage);
+      } else {
+        return response;
       }
     },
   ],
