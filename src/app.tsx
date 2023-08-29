@@ -2,7 +2,8 @@ import Right from '@/components/right';
 import { fetchInitialData } from '@/models/init';
 import { RuntimeAntdConfig } from '@@/plugin-antd/types';
 import { RequestConfig } from '@@/plugin-request/request';
-import { theme } from 'antd';
+import { history } from '@umijs/max';
+import { message, notification, theme } from 'antd';
 
 export function getInitialState() {
   return fetchInitialData();
@@ -63,20 +64,44 @@ export const request: RequestConfig = {
     },
   ],
   errorConfig: {
-    // 错误抛出
-    errorThrower: (res: ResponseStructure) => {
-      const { success, data, errorCode, errorMessage } = res;
-      if (!success || undefined) {
-        const error: any = new Error(errorMessage);
-        error.name = 'BizError';
-        error.data = { success, data, errorCode, errorMessage };
-        throw error; // 抛出自制的错误
-      }
-    },
-    // 错误接收及处理
+    // // 错误抛出
+    // errorThrower: (res: ResponseStructure) => {
+    //   const { success, data, errorCode, errorMessage } = res;
+    //   if (!success || undefined) {
+    //     const error: any = new Error(errorMessage);
+    //     error.name = 'BizError';
+    //     error.info = { success, data, errorCode, errorMessage };
+    //     throw error; // 抛出自制的错误
+    //   }
+    // },
+    // // 错误接收及处理
 
     errorHandler: (error: any, opts: any) => {
-      console.log(error.data);
+      console.log(error);
+      const { errorCode, errorMessage } = error;
+      switch (errorCode) {
+        case ErrorShowType.SILENT:
+          // do nothing
+          break;
+        case ErrorShowType.WARNMESSAGE:
+          message.error(errorMessage);
+          break;
+        case ErrorShowType.ERRORMESSAGE:
+          message.error(errorMessage);
+          break;
+        case ErrorShowType.NOTIFICATION:
+          notification.open({
+            description: errorMessage,
+            message: errorCode,
+          });
+          break;
+        case ErrorShowType.REDIRECT:
+          // TODO: redirect
+          history.push('/login');
+          break;
+        default:
+          message.error(errorMessage);
+      }
     },
   },
 
@@ -87,9 +112,8 @@ export const request: RequestConfig = {
       const data: ResponseStructure = response.data;
       if (data.success) {
         return response.data;
-      } else {
-        return response;
       }
+      throw response.data;
     },
   ],
 };
