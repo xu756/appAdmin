@@ -7,7 +7,7 @@ export interface UserState {
     id: number;
     name: string;
     avatar: string;
-    group: string;
+    group_code: string;
     role: Array<Number>;
 }
 
@@ -25,7 +25,7 @@ export const fetchInitialData = async () => {
         id: 0,
         name: '',
         avatar: '',
-        group: '',
+        group_code: '',
         role: []
     }
     let init: InitState = {

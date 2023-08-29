@@ -1,23 +1,21 @@
-import {history} from "@umijs/max";
-import {InitState, UserState} from "@/models/init";
-import User from "@/services/user";
-import {message} from "antd";
-
+import { InitState } from '@/models/init';
+import { history } from '@umijs/max';
 
 export default function (state: InitState) {
-    if (history.location.pathname == '/login') {
-        return {
-            user: false,
-        }
-    }
-    if (state.user?.id == 0) {
-        return {
-            user: false,
-        }
-    }
-    return {
-        user: true,
-        public: false
-    };
-
+  let user = false;
+  let miniAdmin = false;
+  if (history.location.pathname == '/login') {
+    user = false;
+  }
+  if (state.user?.id == 0) {
+    user = false;
+  }
+  if (state.user.group_code == 'admin') {
+    miniAdmin = true;
+  }
+  return {
+    user: user,
+    public: true,
+    miniAdmin: miniAdmin,
+  };
 }

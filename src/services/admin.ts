@@ -14,11 +14,18 @@ export default class Admin {
   }
 
   // 获取所有小程序内容
-  public static getContents(id: number, pageNum: number, pageSize: number) {
-    return request('/admin/mini/getContents', {
+  public static getContents(
+    content_class: string,
+    pageNum: number,
+    pageSize: number,
+  ) {
+    return request<{
+      total: number;
+      list: Content[];
+    }>('/admin/mini/getContents', {
       method: 'post',
       data: {
-        id,
+        content_class,
         pageSize,
         pageNum: pageNum > 1 ? pageNum : 1,
       },
