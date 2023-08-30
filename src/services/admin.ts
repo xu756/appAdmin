@@ -14,21 +14,13 @@ export default class Admin {
   }
 
   // 获取所有小程序内容
-  public static getContents(
-    content_class: string,
-    current: number,
-    pageSize: number,
-  ) {
+  public static getContents(params:any) {
     return request<{
       total: number;
       list: Content[];
     }>('/admin/mini/getContents', {
       method: 'post',
-      data: {
-        content_class,
-        pageSize,
-        current: current > 1 ? current : 1,
-      },
+      data: params,
     });
   }
 
