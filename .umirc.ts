@@ -72,7 +72,7 @@ export default defineConfig({
 
   proxy: {
     '/api/app': {
-      target: 'https://dev.imlogic.cn/api/app',
+      target: 'https://dev.imlogic.cn:18083/api/app',
       changeOrigin: true,
       pathRewrite: { '^/api/app': '' },
     },

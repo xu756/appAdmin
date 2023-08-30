@@ -16,7 +16,7 @@ export default class Admin {
   // 获取所有小程序内容
   public static getContents(
     content_class: string,
-    pageNum: number,
+    current: number,
     pageSize: number,
   ) {
     return request<{
@@ -27,7 +27,7 @@ export default class Admin {
       data: {
         content_class,
         pageSize,
-        pageNum: pageNum > 1 ? pageNum : 1,
+        current: current > 1 ? current : 1,
       },
     });
   }

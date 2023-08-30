@@ -1,5 +1,5 @@
 import Content from '@/models/content';
-import Admin from '@/services/admin';
+import { request } from '@@/exports';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
@@ -39,18 +39,9 @@ const columns: ProColumns<Content>[] = [
 export default () => {
   const [dataSource, setDataSource] = useState<readonly Content[]>([]);
   const [total, serTotal] = useState<number>(0);
-  const [pageNum, setPageNum] = useState<number>(1);
-  const [pageSize, setPageSize] = useState<number>(8);
+  let pageSize = 5; //每页多少条
 
-  const getData = () => {
-    Admin.getContents('content', pageNum, pageSize).then((res) => {
-      setDataSource(res.list);
-      serTotal(res.total);
-    });
-  };
-  useEffect(() => {
-    getData();
-  }, []);
+  useEffect(() => {}, []);
   return (
     <>
       <ProTable<Content>
@@ -59,16 +50,23 @@ export default () => {
         editable={{
           type: 'multiple',
         }}
-        onReset={getData}
-        request={async () => {
-          await getData();
+        request={async (params = {}, sort, filter) => {
+          console.log(params);
+          params.content_class = 'content';
+          const data = await request<{
+            total: number;
+            list: Content[];
+          }>('/admin/mini/getContents', {
+            method: 'post',
+            data: params,
+          });
+          console.log(data.list);
           return {
-            data: dataSource,
+            data: data.list,
             success: true,
-            total: total,
+            total: data.total,
           };
         }}
-        dataSource={dataSource}
         columnsState={{
           persistenceKey: 'pro-table-singe-demos',
           persistenceType: 'localStorage',
@@ -87,7 +85,7 @@ export default () => {
         }}
         pagination={{
           pageSize: pageSize,
-          onChange: (page) => setPageSize(page),
+          onChange: (page) => console.log(page),
         }}
         dateFormatter="string"
         headerTitle="高级表格"
