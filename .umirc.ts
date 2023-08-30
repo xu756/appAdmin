@@ -54,7 +54,27 @@ export default defineConfig({
             {
               path: '/mini/content',
               name: '内容管理',
-              component: '@/pages/mini/content/content',
+              routes: [
+                {
+                  path: '/mini/content',
+                  redirect: '/mini/content/list',
+                },
+                {
+                  path: '/mini/content/list',
+                  name: '内容管理',
+                  component: '@/pages/mini/content/content',
+                },
+                {
+                  path: '/mini/content/text',
+                  name: '文本内容',
+                  component: '@/pages/mini/content/text',
+                },
+                {
+                  path: '/mini/content/image',
+                  name: '图片内容',
+                  component: '@/pages/mini/content/image',
+                },
+              ],
             },
             {
               path: '/mini/banner',
