@@ -17,6 +17,8 @@ import { useRef, useState } from 'react';
 export default () => {
   const [content, setContent] = useState<Content>();
   const formRef = useRef<ProFormInstance<Content>>();
+  const [ContentText, setContentText] = useState<string>('');
+
   const onFinish = async (values: Content) => {
     console.log(values);
   };
@@ -29,6 +31,7 @@ export default () => {
           let state = history.location.state as PathState;
           const data = await Admin.getContent(state.id, state.content_class);
           setContent(data);
+          setContentText(data.content_text);
           return data;
         }}
         autoFocusFirstInput
@@ -57,21 +60,22 @@ export default () => {
               },
             ]}
           />
+            <ProFormText
+                width="lg"
+                name="title"
+                required
+                label="内容标题"
+                tooltip="最长为 24 位"
+                placeholder="请输入标题"
+                rules={[{ required: true, message: '这是必填项' }]}
+            />
         </ProForm.Group>
         <ProForm.Group>
-          <ProFormText
-            width="lg"
-            name="title"
-            required
-            label="内容标题"
-            tooltip="最长为 24 位"
-            placeholder="请输入标题"
-            rules={[{ required: true, message: '这是必填项' }]}
-          />
+
         </ProForm.Group>
-        <ProForm.Group>
-          <Image width={'375px'} src={content?.img_url||''} />
-        </ProForm.Group>
+        <ProForm.Item label={"封面图片"} tooltip={"轮播图设置这个"}>
+          <Image width={'375px'} src={content?.img_url || ''} />
+        </ProForm.Item>
         <ProForm.Group>
           <ProFormTextArea
             width={'xl'}
@@ -80,6 +84,9 @@ export default () => {
             placeholder="请输入简介"
           />
         </ProForm.Group>
+          <ProForm.Group >
+
+          </ProForm.Group>
       </ProForm>
       <PathModel
         title={'找不到富文本内容'}
