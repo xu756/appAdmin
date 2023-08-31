@@ -1,4 +1,5 @@
 import Content from '@/models/content';
+import { PathState } from '@/models/path';
 import Admin from '@/services/admin';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-components';
@@ -13,13 +14,13 @@ const Goto = (id: number, content_type: number) => {
         id: id,
         content_type: content_type,
         content_class: 'content',
-      });
+      } as PathState);
     } else {
-        history.push('/mini/content/image', {
-            id: id,
-            content_type: content_type,
-            content_class: 'content',
-        });
+      history.push('/mini/content/image', {
+        id: id,
+        content_type: content_type,
+        content_class: 'content',
+      });
     }
   };
 };
@@ -120,8 +121,7 @@ export default () => {
         columnsState={{
           persistenceKey: 'pro-table-singe-demos',
           persistenceType: 'localStorage',
-          onChange(value) {
-          },
+          onChange(value) {},
         }}
         rowKey="id"
         search={{

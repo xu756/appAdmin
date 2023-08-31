@@ -54,6 +54,7 @@ export default defineConfig({
             {
               path: '/mini/content',
               name: '内容管理',
+              hideChildrenInMenu: true,
               routes: [
                 {
                   path: '/mini/content',
@@ -61,7 +62,6 @@ export default defineConfig({
                 },
                 {
                   path: '/mini/content/list',
-                  name: '内容管理',
                   component: '@/pages/mini/content/content',
                 },
                 {

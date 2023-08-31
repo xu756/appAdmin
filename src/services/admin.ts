@@ -25,7 +25,7 @@ export default class Admin {
   }
 
   // 获取单个
-  public static getContent(id: number, content_class: string) {
+  public static async  getContent(id: number, content_class: string) {
     return request('/admin/mini/getContent', {
       method: 'post',
       data: {
