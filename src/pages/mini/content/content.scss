@@ -1,0 +1,23 @@
+.content {
+  width: 100%;
+  @media (min-width: 576px) {
+    &-from {
+      width: calc(100% - 460px);
+      float: left;
+    }
+    &-view {
+      width: 375px;
+      float: right;
+    }
+  }
+  @media (max-width: 576px) {
+    &-from {
+      max-width: 100%;
+    }
+    &-view {
+      padding-top: 30px;
+      width: 100%;
+    }
+  }
+
+}
