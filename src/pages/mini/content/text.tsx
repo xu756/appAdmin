@@ -12,22 +12,35 @@ import {
   ProFormTextArea,
 } from '@ant-design/pro-components';
 import { history } from '@umijs/max';
-import { Affix, Card, Image } from 'antd';
+import { Affix, Button, Card, Image, Space, Upload, message } from 'antd';
 import { useRef, useState } from 'react';
 import './content.scss';
 
 export default () => {
   const [content, setContent] = useState<Content>();
   const formRef = useRef<ProFormInstance>();
-
+  const [messageApi, contextHolder] = message.useMessage();
+    const [ImgUrl, setImgUrl] = useState<string>('');
   const [ContentText, setContentText] = useState<string>('');
 
   const onFinish = async (values: Content) => {
-    console.log(values);
-  };
+    const res = await Admin.editContent(
+      formRef.current?.getFieldFormatValueObject?.() as Content,
+    );
 
+    console.log(res);
+  };
+  const ContentConv = (content: string) => {
+    return content.replace(/<img[^>]*>/gi, function (match, _) {
+      return match.replace(
+        /style\s*?=\s*?([‘"])[\s\S]*?\1/gi,
+        'style="max-width:100%;height:auto;"',
+      ); // 替换style
+    });
+  };
   return (
     <div className={'content'}>
+      {contextHolder}
       <ProForm<Content>
         className={'content-from'}
         onFinish={onFinish}
@@ -36,6 +49,7 @@ export default () => {
           let state = history.location.state as PathState;
           const data = await Admin.getContent(state.id, state.content_class);
           setContent(data);
+            setImgUrl(data.img_url)
           setContentText(data.content_text);
           return data;
         }}
@@ -75,21 +89,49 @@ export default () => {
             rules={[{ required: true, message: '这是必填项' }]}
           />
         </ProForm.Group>
-
         <ProForm.Group>
-          <ProFormTextArea
-            width={'xl'}
-            name="desc_text"
-            label="简介"
-            placeholder="请输入简介"
-          />
           <ProForm.Item
             label={'封面图片'}
             tooltip={'轮播图设置这个'}
             valueType={'image'}
             name={'img_url'}
           >
-            <Image width={'375px'} src={content?.img_url || ''} />
+            <Space>
+              <Image
+                className={'content-img'}
+                src={ImgUrl}
+              />
+            </Space>
+
+            <Space>
+              <Upload
+                name="file"
+                action="/api/app/public/uploadimg?path=content"
+                onChange={(info) => {
+                  if (info.file.status !== 'uploading') {
+                  }
+                  if (info.file.status === 'done') {
+                    messageApi.success(`${info.file.name} 上传成功`);
+                    formRef.current?.setFieldsValue({
+                      img_url: info.file.response.data.url,
+                    });
+                    setImgUrl(info.file.response.data.url)
+                  } else if (info.file.status === 'error') {
+                    messageApi.error(`${info.file.name} 上传失败`);
+                  }
+                }}
+              >
+                <Button>上传图片</Button>
+              </Upload>
+            </Space>
+          </ProForm.Item>
+          <ProForm.Item>
+            <ProFormTextArea
+              width={'lg'}
+              name="desc_text"
+              label="简介"
+              placeholder="请输入简介"
+            />
           </ProForm.Item>
         </ProForm.Group>
         <ProForm.Item label={'内容'} tooltip={'和小程序内部样式一样'}>
@@ -97,17 +139,25 @@ export default () => {
             html={ContentText}
             onChange={(html) => {
               setContentText(html);
-              formRef.current?.setFieldsValue({ content_text: html });
+              formRef.current?.setFieldsValue({
+                content_text: html,
+              });
             }}
           />
         </ProForm.Item>
       </ProForm>
       <Affix className={'content-view'} offsetTop={120}>
-        <Card
-          title="小程序端内容效果"
-          bordered={false}
-        >
-            <div dangerouslySetInnerHTML={{ __html: ContentText }}></div>
+        <Card title="小程序端内容效果" bordered={false}>
+          <div
+            style={{
+              width: '100%',
+              height: '700px',
+              overflow: 'auto',
+            }}
+            dangerouslySetInnerHTML={{
+              __html: ContentConv(ContentText),
+            }}
+          ></div>
         </Card>
       </Affix>
       <PathModel

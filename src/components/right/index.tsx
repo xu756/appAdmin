@@ -1,10 +1,11 @@
-import { InitState } from '@/models/init';
+import {fetchInitialData, InitState} from '@/models/init';
 import { InitDataType, RunTimeLayoutConfig } from '@@/plugin-layout/types';
 import type { MenuProps } from 'antd';
 
 import SearchInput from '@/components/right/SearchInput';
 import { history } from '@@/core/history';
 import { LogoutOutlined } from '@ant-design/icons';
+import { useModel } from '@umijs/max';
 import { Avatar, Col, Dropdown, Row, Space } from 'antd';
 
 const menu: MenuProps = {

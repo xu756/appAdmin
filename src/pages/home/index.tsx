@@ -1,16 +1,13 @@
-import {useModel} from '@umijs/max';
-import {useEffect} from 'react';
+import { fetchInitialData } from '@/models/init';
+import { useModel } from '@umijs/max';
+import { useEffect } from 'react';
 
 const HomePage = () => {
-    const state = useModel('@@initialState');
-    useEffect(() => {
-        console.log(state);
-    }, []);
-    return (
-        <>
-            <h1>home</h1>
-        </>
-    );
+  return (
+    <>
+      <h1>home</h1>
+    </>
+  );
 };
 
 export default HomePage;

@@ -1,3 +1,4 @@
+import { fetchInitialData } from '@/models/init';
 import Public from '@/services/public';
 import {
   LockOutlined,
@@ -54,7 +55,8 @@ export default () => {
   };
   useEffect(() => {
     if (localStorage.getItem('token')) {
-      message.success({
+      message
+        .success({
           content: '已登录',
           duration: 1,
         })

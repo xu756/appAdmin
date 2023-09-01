@@ -25,9 +25,6 @@ export default (prop: Prop) => {
   const [editor, setEditor] = useState<IDomEditor | null>(null); // TS 语法
   const toolbarConfig: Partial<IToolbarConfig> = {
     toolbarKeys: [
-      'headerSelect',
-      'blockquote',
-      '|',
       'bold',
       'italic',
       'underline',
@@ -75,7 +72,7 @@ export default (prop: Prop) => {
     placeholder: '请输入内容...',
     MENU_CONF:{
       'uploadImage':{
-        server:'/api/app/public/upload',
+        server:'/api/app/public/edit/upload',
         // form-data fieldName ，默认值 'wangeditor-uploaded-image'
         fieldName: 'file',
 
