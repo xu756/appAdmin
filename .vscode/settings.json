@@ -1,3 +1,4 @@
 {
-    "cSpell.words": ["ahooks", "reduxjs", "tailwindcss"]
+    "cSpell.words": ["ahooks", "reduxjs", "tailwindcss"],
+    "deepscan.ignoreConfirmWarning": true
 }
