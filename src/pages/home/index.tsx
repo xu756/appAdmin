@@ -1,13 +1,7 @@
-import { fetchInitialData } from '@/models/init';
-import { useModel } from '@umijs/max';
-import { useEffect } from 'react';
-
-const HomePage = () => {
-  return (
-    <>
-      <h1>home</h1>
-    </>
-  );
+import { useMount } from 'ahooks';
+const Home = () => {
+    useMount(() => {});
+    return <>home</>;
 };
 
-export default HomePage;
+export default Home;
