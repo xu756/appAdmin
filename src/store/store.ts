@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { systemStore } from './hooks/system';
+import { menuStore } from './hooks/menu';
 const store = configureStore({
     reducer: {
         system: systemStore.reducer,
+        menu: menuStore.reducer,
     },
 });
 

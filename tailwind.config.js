@@ -22,4 +22,7 @@ export default {
     },
     darkMode: 'class',
     plugins: [],
+    corePlugins: {
+        preflight: false,
+    },
 };
