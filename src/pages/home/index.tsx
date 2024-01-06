@@ -1,12 +1,15 @@
 import { GithubFilled, InfoCircleFilled, QuestionCircleFilled } from '@ant-design/icons';
-import { PageContainer, ProCard, ProLayout } from '@ant-design/pro-components';
-import { Avatar, Image, Space } from 'antd';
-import { useState } from 'react';
+import { PageContainer, ProCard, ProLayout, type ActionType } from '@ant-design/pro-components';
+import { Avatar, Button, Space } from 'antd';
+import { useState, useRef } from 'react';
 import { useAppSelector } from '@/store';
 import { useMount } from 'ahooks';
+
 export default () => {
     const [pathname, setPathname] = useState('/');
     const menuData = useAppSelector(state => state.menu);
+
+    const actionRef = useRef<ActionType>();
     useMount(() => {
         console.log('menuData', menuData);
     });
@@ -15,58 +18,43 @@ export default () => {
             location={{
                 pathname,
             }}
+            layout="mix"
+            loading={false}
+            actionRef={actionRef}
             route={menuData.menu}
             menu={{
                 type: 'group',
             }}
+            links={[<Button key="1">操作一</Button>, <Button key="2">操作二</Button>]}
+            collapsedButtonRender={false}
             actionsRender={props => {
                 if (props.isMobile) return [];
                 return [
-                    <div
+                    <Space
                         key={1}
+                        align="center"
                         style={{
-                            height: '200px',
+                            width: '100%',
                         }}
                     >
-                        <Image
-                            width={'100%'}
-                            preview={false}
-                            height={132}
-                            src="https://gw.alipayobjects.com/zos/bmw-prod/d283f09a-64d6-4d59-bfc7-37b49ea0da2b.svg"
+                        <Avatar
+                            src="https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg"
+                            size="small"
                         />
-                        <Space
-                            align="center"
-                            size="middle"
+                        <div
                             style={{
-                                width: '100%',
-                                marginBlockStart: '32px',
+                                fontSize: '14px',
+                                marginInlineEnd: '32px',
                             }}
                         >
-                            <Avatar
-                                src="https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg"
-                                size="small"
-                            />
-                            <div
-                                style={{
-                                    fontSize: '14px',
-                                    marginInlineEnd: '32px',
-                                }}
-                            >
-                                七妮妮
-                            </div>
-                            <InfoCircleFilled key="InfoCircleFilled" />
-                            <QuestionCircleFilled key="QuestionCircleFilled" />
-                            <GithubFilled key="GithubFilled" />
-                        </Space>
-                    </div>,
+                            七妮妮
+                        </div>
+                        <InfoCircleFilled key="InfoCircleFilled" />
+                        <QuestionCircleFilled key="QuestionCircleFilled" />
+                        <GithubFilled key="GithubFilled" />
+                    </Space>,
                 ];
             }}
-            menuRender={(props, defaultDom) => (
-                <>
-                    {console.log('defaultDom', defaultDom)}
-                    {defaultDom}
-                </>
-            )}
             menuItemRender={(item, dom) => (
                 <div
                     onClick={() => {
@@ -78,13 +66,9 @@ export default () => {
             )}
         >
             <PageContainer>
-                <ProCard
-                    style={{
-                        height: '100vh',
-                        minHeight: 800,
-                    }}
-                >
-                    <div />
+                <ProCard>
+                    {/* <Outlet /> */}
+                    11
                 </ProCard>
             </PageContainer>
         </ProLayout>
