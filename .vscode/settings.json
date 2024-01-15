@@ -1,4 +1,12 @@
 {
-    "cSpell.words": ["ahooks", "antd", "reduxjs", "sider", "tailwindcss"],
+    "cSpell.words": [
+        "ahooks",
+        "antd",
+        "packagejson",
+        "reduxjs",
+        "sider",
+        "tailwindcss",
+        "umijs"
+    ],
     "deepscan.ignoreConfirmWarning": true
 }
