@@ -5,7 +5,6 @@ import { useMount } from 'ahooks';
 import { PageContainer } from '@ant-design/pro-components';
 // import { useAccess, useLocation } from '@umijs/max';
 import { FloatButton } from 'antd';
-
 // const LoginPath = '/login';
 export default () => {
     // const access = useAccess();

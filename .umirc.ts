@@ -17,8 +17,27 @@ export default defineConfig({
         {
             name: '首页',
             path: '/home',
-            component: '@/pages/Home',
+            component: '@/layouts',
             access: 'user',
+        },
+        {
+            name: '小程序',
+            path: '/app',
+            access: 'user',
+            routes: [
+                {
+                    name: '小程序详情',
+                    path: '/app',
+                    component: '@/pages/Wxapp/Detail',
+                    access: 'user',
+                },
+                {
+                    name: '小程序管理',
+                    path: '/app/admin',
+                    component: '@/pages/Wxapp/Admin',
+                    access: 'user',
+                },
+            ],
         },
         {
             name: '登录',

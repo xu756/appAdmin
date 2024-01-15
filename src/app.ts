@@ -3,7 +3,7 @@ import { RequestConfig } from '@@/plugin-request/request';
 import { RunTimeLayoutConfig, history } from '@umijs/max';
 import { notification } from 'antd';
 
-import { DEFAULT_TITLE } from './constants';
+import { DEFAULT_TITLE, LayoutHeader } from './constants';
 
 export async function getInitialState() {
     return {};
@@ -17,15 +17,20 @@ export const layout: RunTimeLayoutConfig = () => {
         // logo: Logo,
         menu: {
             locale: false,
+            type: 'group',
         },
-        layout: 'top',
+        layout: 'mix',
         fixSiderbar: true,
         siderWidth: 200,
         // rightContentRender: () => <RightContent />,
         waterMarkProps: {
             content: [DEFAULT_TITLE],
         },
-        token: {},
+        token: {
+            header: {
+                heightLayoutHeader: LayoutHeader,
+            },
+        },
     };
 };
 
