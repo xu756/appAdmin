@@ -1,6 +1,6 @@
 // 运行时配置
 import { RequestConfig } from '@@/plugin-request/request';
-import { RunTimeLayoutConfig } from '@umijs/max';
+import { RunTimeLayoutConfig, history } from '@umijs/max';
 import { notification } from 'antd';
 
 import { DEFAULT_TITLE } from './constants';
@@ -10,7 +10,7 @@ export async function getInitialState() {
 }
 export const layout: RunTimeLayoutConfig = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const { initialState } = useModel('@@initialState');
+    // const { initialState } = useModel('@@initialState');
 
     return {
         title: DEFAULT_TITLE,
@@ -23,11 +23,35 @@ export const layout: RunTimeLayoutConfig = () => {
         siderWidth: 200,
         // rightContentRender: () => <RightContent />,
         waterMarkProps: {
-            content: [DEFAULT_TITLE, initialState?.User.Name],
+            content: [DEFAULT_TITLE],
         },
         token: {},
     };
 };
+
+interface ResponseStructure {
+    success: boolean;
+    data?: any;
+    errorCode?: number;
+    errorMessage?: string;
+    timestamp?: number;
+}
+
+function getCookie(param: string) {
+    let value = '';
+    if (document.cookie.length > 0) {
+        const arr = document.cookie.split('; '); //这里显示的格式需要切割一下自己可输出看下
+        for (let i = 0; i < arr.length; i++) {
+            const arr2 = arr[i].split('='); //再次切割
+            //判断查找相对应的值
+            if (arr2[0] === param) {
+                value = arr2[1];
+                //保存到保存数据的地方
+            }
+        }
+        return value;
+    }
+}
 
 export const request: RequestConfig = {
     timeout: 3000,
