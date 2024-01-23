@@ -23,12 +23,24 @@ export default defineConfig({
         {
             name: '小程序',
             path: '/app',
+            icon: 'appstoreAddOutlined',
             access: 'user',
             routes: [
                 {
-                    name: '小程序详情',
                     path: '/app',
+                    redirect: '/app/detail',
+                },
+                {
+                    name: '小程序详情',
+                    path: '/app/detail',
                     component: '@/pages/Wxapp/Detail',
+                    access: 'user',
+                },
+                {
+                    path: '/app/config',
+                    name: '小程序基本配置',
+                    icon: 'settingOutlined',
+                    component: '@/pages/Wxapp/Config',
                     access: 'user',
                 },
                 {
