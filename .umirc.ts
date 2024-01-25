@@ -38,7 +38,7 @@ export default defineConfig({
                 },
                 {
                     path: '/app/config',
-                    name: '小程序基本配置',
+                    name: '小程序配置',
                     icon: 'settingOutlined',
                     component: '@/pages/Wxapp/Config',
                     access: 'user',
