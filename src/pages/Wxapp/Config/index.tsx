@@ -31,11 +31,17 @@ export default () => {
                         action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
                         name={['backgroundImg']}
                         listType="picture-card"
-                        fieldProps={
-                            {
-                                // onPreview: handlePreview,
-                            }
-                        }
+                        fieldProps={{
+                            onChange(info) {
+                                if (info.file.status === 'done' && info.file.response.success) {
+                                    info.file.url =
+                                        'https://cos.imlogic.cn/appadmin/images/iShot_2024-01-26_00.53.42.png';
+                                    info.file.thumbUrl =
+                                        'https://cos.imlogic.cn/appadmin/images/iShot_2024-01-26_00.53.42.png';
+                                    console.log(info.file);
+                                }
+                            },
+                        }}
                     />
                 </ProForm.Group>
             </ProForm>

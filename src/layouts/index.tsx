@@ -18,7 +18,7 @@ export default () => {
                 target="_blank"
                 icon={<QuestionCircleOutlined />}
                 type="primary"
-                style={{ right: 24 }}
+                style={{ right: 24, bottom: 80 }}
             />
             <Outlet />
         </PageContainer>
