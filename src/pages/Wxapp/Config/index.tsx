@@ -34,11 +34,8 @@ export default () => {
                         fieldProps={{
                             onChange(info) {
                                 if (info.file.status === 'done' && info.file.response.success) {
-                                    info.file.url =
-                                        'https://cos.imlogic.cn/appadmin/images/iShot_2024-01-26_00.53.42.png';
-                                    info.file.thumbUrl =
-                                        'https://cos.imlogic.cn/appadmin/images/iShot_2024-01-26_00.53.42.png';
-                                    console.log(info.file);
+                                    info.file.url = 'https://cos.imlogic.cn/appadmin/images/1.png';
+                                    info.file.thumbUrl = 'https://cos.imlogic.cn/appadmin/images/1.png';
                                 }
                             },
                         }}
