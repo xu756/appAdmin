@@ -8,6 +8,15 @@ import { DEFAULT_TITLE, LayoutHeader } from './constants';
 export async function getInitialState() {
     return {};
 }
+
+const RightContent = () => {
+    return (
+        <>
+            <div>11</div>;
+        </>
+    );
+};
+
 export const layout: RunTimeLayoutConfig = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     // const { initialState } = useModel('@@initialState');
@@ -22,7 +31,11 @@ export const layout: RunTimeLayoutConfig = () => {
         layout: 'mix',
         fixSiderbar: true,
         siderWidth: 200,
-        // rightContentRender: () => <RightContent />,
+        // splitMenus: true,
+        rightContentRender: () => <RightContent />,
+        actionsRender: () => {
+            return [<div key={1}>123111111</div>];
+        },
         waterMarkProps: {
             content: [DEFAULT_TITLE],
         },
