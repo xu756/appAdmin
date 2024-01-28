@@ -1,7 +1,7 @@
 // 运行时配置
 import { RequestConfig } from '@@/plugin-request/request';
 import { RunTimeLayoutConfig, history } from '@umijs/max';
-import { notification } from 'antd';
+import { Button, Input, notification } from 'antd';
 
 import { DEFAULT_TITLE, LayoutHeader } from './constants';
 
@@ -12,7 +12,7 @@ export async function getInitialState() {
 const RightContent = () => {
     return (
         <>
-            <div>11</div>;
+            <div>Avatar</div>
         </>
     );
 };
@@ -31,11 +31,25 @@ export const layout: RunTimeLayoutConfig = () => {
         layout: 'mix',
         fixSiderbar: true,
         siderWidth: 200,
-        // splitMenus: true,
-        rightContentRender: () => <RightContent />,
-        actionsRender: () => {
-            return [<div key={1}>123111111</div>];
+        avatarProps: {
+            render: () => <div>Avatar</div>,
         },
+        actionsRender: () => {
+            return [
+                <Input.Search
+                    key="search"
+                    style={{
+                        width: 240,
+                    }}
+                />,
+                <Button key="3">操作一</Button>,
+                <Button key="2" type="primary">
+                    操作一
+                </Button>,
+            ];
+        },
+        // splitMenus: true,
+        // rightContentRender: () => <RightContent />,
         waterMarkProps: {
             content: [DEFAULT_TITLE],
         },
