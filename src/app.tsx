@@ -1,21 +1,14 @@
 // 运行时配置
 import { RequestConfig } from '@@/plugin-request/request';
 import { RunTimeLayoutConfig, history } from '@umijs/max';
-import { Button, Input, notification } from 'antd';
+import { notification } from 'antd';
 
 import { DEFAULT_TITLE, LayoutHeader } from './constants';
+import { ActionComponent } from './layouts/layout';
 
 export async function getInitialState() {
     return {};
 }
-
-const RightContent = () => {
-    return (
-        <>
-            <div>Avatar</div>
-        </>
-    );
-};
 
 export const layout: RunTimeLayoutConfig = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -34,20 +27,7 @@ export const layout: RunTimeLayoutConfig = () => {
         avatarProps: {
             render: () => <div>Avatar</div>,
         },
-        actionsRender: () => {
-            return [
-                <Input.Search
-                    key="search"
-                    style={{
-                        width: 240,
-                    }}
-                />,
-                <Button key="3">操作一</Button>,
-                <Button key="2" type="primary">
-                    操作一
-                </Button>,
-            ];
-        },
+        actionsRender: ActionComponent,
         // splitMenus: true,
         // rightContentRender: () => <RightContent />,
         waterMarkProps: {
