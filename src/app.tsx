@@ -3,16 +3,21 @@ import { RequestConfig } from '@@/plugin-request/request';
 import { RunTimeLayoutConfig, history } from '@umijs/max';
 import { notification } from 'antd';
 
+import { useModel } from '@umijs/max';
 import { DEFAULT_TITLE, LayoutHeader } from './constants';
 import { ActionComponent } from './layouts/layout';
 
 export async function getInitialState() {
-    return {};
+    return {
+        user: {
+            name: 'admin',
+        },
+    };
 }
 
 export const layout: RunTimeLayoutConfig = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    // const { initialState } = useModel('@@initialState');
+    const { initialState } = useModel('@@initialState');
 
     return {
         title: DEFAULT_TITLE,
@@ -25,7 +30,9 @@ export const layout: RunTimeLayoutConfig = () => {
         fixSiderbar: true,
         siderWidth: 200,
         avatarProps: {
-            render: () => <div>Avatar</div>,
+            title: initialState?.user?.name,
+            src: 'https://cos.imlogic.cn/appadmin/images/avatar.jpeg',
+            draggable: false,
         },
         actionsRender: ActionComponent,
         // splitMenus: true,

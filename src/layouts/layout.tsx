@@ -7,7 +7,7 @@ export const ActionComponent = (prop: any): React.ReactNode[] => {
         <Input.Search
             key="search"
             style={{
-                width: 240,
+                width: 200,
             }}
         />,
     ];
