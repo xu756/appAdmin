@@ -4,9 +4,9 @@ export default defineConfig({
     antd: {
         configProvider: {
             theme: {
-                cssVar: {
-                    prefix: 'server',
-                },
+                // cssVar: {
+                //     prefix: 'server',
+                // },
             },
         },
     },
@@ -72,7 +72,7 @@ export default defineConfig({
     // /api 会被代理到 http://
     proxy: {
         '/api': {
-            target: 'http://localhost:8080/api',
+            target: 'http://localhost:7080/api',
             changeOrigin: true,
             pathRewrite: { '^/api': '' },
         },

@@ -56,22 +56,6 @@ interface ResponseStructure {
     timestamp?: number;
 }
 
-function getCookie(param: string) {
-    let value = '';
-    if (document.cookie.length > 0) {
-        const arr = document.cookie.split('; '); //这里显示的格式需要切割一下自己可输出看下
-        for (let i = 0; i < arr.length; i++) {
-            const arr2 = arr[i].split('='); //再次切割
-            //判断查找相对应的值
-            if (arr2[0] === param) {
-                value = arr2[1];
-                //保存到保存数据的地方
-            }
-        }
-        return value;
-    }
-}
-
 export const request: RequestConfig = {
     timeout: 3000,
     headers: {
@@ -81,8 +65,16 @@ export const request: RequestConfig = {
     // 请求拦截器
     requestInterceptors: [
         (config: any) => {
-            config.url = '/api' + config.url;
-            config.headers.Authorization = getCookie('token');
+            if (!config.url.startsWith('/log')) {
+                const token = sessionStorage.getItem('token') || localStorage.getItem('token');
+                if (token === '') {
+                    // 跳转
+                    console.log(history.location);
+                    history.push('/login');
+                }
+                config.headers.Authorization = token;
+            }
+            config.url = '/api/admin' + config.url;
             return config;
         },
     ],
@@ -96,16 +88,17 @@ export const request: RequestConfig = {
                 });
                 return;
             }
+            console.log(errorMessage);
 
-            // 220 -229 跳转到登录页面
-            if (errorCode >= 230 && errorCode <= 239) {
-                history.push('/login');
-                return;
-            }
-            notification.warning({
-                description: `请求错误 ${errorMessage}`,
-                message: `错误代码：${errorCode}`,
-            });
+            // // 220 -229 跳转到登录页面
+            // if (errorCode >= 230 && errorCode <= 239) {
+            //     history.push('/login');
+            //     return;
+            // }
+            // notification.warning({
+            //     description: `请求错误 ${errorMessage}`,
+            //     message: `错误代码：${errorCode}`,
+            // });
         },
     },
     // 响应拦截器
