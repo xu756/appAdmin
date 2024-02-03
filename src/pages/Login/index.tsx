@@ -42,7 +42,7 @@ const Page = () => {
         onSuccess: (result) => {
             console.log(result);
             message.success('登录成功！');
-            // 保存token
+            // todo 保存token
             message.success('正在获取用户信息！,如果显示403请刷新一下页面');
             // todo 获取用户信息
         },
@@ -50,7 +50,6 @@ const Page = () => {
             console.log(error);
         },
     });
-
     // 登录
     const onFinish = async (values: FromValues) => {
         // todo 添加sessionId
@@ -71,6 +70,13 @@ const Page = () => {
                 containerStyle={{
                     backgroundColor: 'rgba(0, 0, 0,0.65)',
                     backdropFilter: 'blur(4px)',
+                }}
+                initialValues={{
+                    autoLogin: true,
+                    username: 'admin',
+                    password: 'ant.design',
+                    mobile: '12345678901',
+                    captcha: '1234',
                 }}
                 loading={loading}
                 onFinish={onFinish}

@@ -88,17 +88,15 @@ export const request: RequestConfig = {
                 });
                 return;
             }
-            console.log(errorMessage);
-
             // // 220 -229 跳转到登录页面
             // if (errorCode >= 230 && errorCode <= 239) {
             //     history.push('/login');
             //     return;
             // }
-            // notification.warning({
-            //     description: `请求错误 ${errorMessage}`,
-            //     message: `错误代码：${errorCode}`,
-            // });
+            notification.warning({
+                description: `请求错误 ${errorMessage}`,
+                message: `错误代码：${errorCode}`,
+            });
         },
     },
     // 响应拦截器
